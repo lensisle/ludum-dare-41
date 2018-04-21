@@ -44,7 +44,7 @@ extras_text = undefined;
 
 #region GAME_STUFF
 
-current_coffee = 
+current_coffee = 0;
 
 enum ESceneState
 {
