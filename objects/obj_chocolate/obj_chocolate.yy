@@ -1,12 +1,12 @@
 {
-    "id": "21bba544-d31a-4f44-8ce8-c38cf03e4745",
+    "id": "c7eb3a8a-2552-4bdd-b8bf-82f748af1e54",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_collision",
+    "name": "obj_chocolate",
     "eventList": [
         
     ],
-    "maskSpriteId": "d9ac2561-0e3b-4132-90ac-18c30cfb756e",
+    "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,
     "parentObjectId": "00000000-0000-0000-0000-000000000000",
     "persistent": false,
@@ -24,6 +24,6 @@
     "physicsStartAwake": true,
     "properties": null,
     "solid": false,
-    "spriteId": "d9ac2561-0e3b-4132-90ac-18c30cfb756e",
-    "visible": false
+    "spriteId": "2a7ad6fc-68cf-4839-99b0-b51a018ba1a8",
+    "visible": true
 }

@@ -1,0 +1,1 @@
+interaction_text = "Select small portion";
