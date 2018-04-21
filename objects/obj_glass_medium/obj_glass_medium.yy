@@ -1,8 +1,8 @@
 {
-    "id": "c7eb3a8a-2552-4bdd-b8bf-82f748af1e54",
+    "id": "520a1497-1120-4fd2-8479-dc8a2e08b072",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_chocolate",
+    "name": "obj_glass_medium",
     "eventList": [
         
     ],
@@ -24,6 +24,6 @@
     "physicsStartAwake": true,
     "properties": null,
     "solid": false,
-    "spriteId": "2a7ad6fc-68cf-4839-99b0-b51a018ba1a8",
+    "spriteId": "4222acef-b813-4066-bcbd-e6afbf12e5a9",
     "visible": true
 }

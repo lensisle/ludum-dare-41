@@ -6,3 +6,4 @@ content_index = 0;
 finished = false;
 destroy_delay = 30;
 text_color = c_white;
+skip = false;

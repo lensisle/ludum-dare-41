@@ -2,18 +2,9 @@
     "id": "6f120565-347b-408f-ae37-72c5834db5b5",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_glass",
+    "name": "obj_glass_large",
     "eventList": [
-        {
-            "id": "bf546f26-6691-4d85-bc70-64d439818e6d",
-            "modelName": "GMEvent",
-            "mvc": "1.0",
-            "IsDnD": false,
-            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 64,
-            "eventtype": 8,
-            "m_owner": "6f120565-347b-408f-ae37-72c5834db5b5"
-        }
+        
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,
