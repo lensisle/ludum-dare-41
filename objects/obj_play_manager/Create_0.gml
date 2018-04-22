@@ -105,6 +105,15 @@ enum ECustomerType
 	StepByStep
 }
 
+enum EDraggrableState
+{
+	Idle,
+	Selected,
+	FollowingCursor,
+	InTrash,
+	DeliveredToCostumer
+}
+
 objects_array = [
 	obj_glass_large,
 	obj_glass_medium,
@@ -211,10 +220,16 @@ messages_fail_preparation = [
 	"Great coffee, but not what I orden. Make me one more, please."
 ];
 
+total_day_time = 10000;
 current_day_time = 0;
 current_costumer_total_time = 0;
 customer_time_between_message = 15;
 customer_message_accum_time = 0;
+
+day_ended = false;
+
+customer_success_count = 0;
+customer_failed_count = 0;
 
 current_customer = undefined;
 current_cup_selected = undefined;
@@ -267,5 +282,7 @@ game_play_text = undefined;
 current_speak_delay = 2;
 
 last_pressed_item = undefined;
+
+allow_selecting_cup = true;
 
 #endregion

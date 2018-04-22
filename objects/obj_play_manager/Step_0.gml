@@ -1,5 +1,6 @@
 manage_cursor_sprite(objects_array, obj_game_manager.current_state != EGameState.Tutorial);
 
+#region Tutorial
 if obj_game_manager.current_state == EGameState.Tutorial
 {
 	if current_tutorial_state == ETutorialState.BossSpawn
@@ -343,117 +344,111 @@ if obj_game_manager.current_state == EGameState.Tutorial
 		}
 	}
 }
+#endregion
+#region WORKDAY_HANDLED
 else if obj_game_manager.current_state == EGameState.WorkDayHandled
 {
-	if current_state != ESceneState.NonInitialized
+	if day_ended && current_customer
+	{
+		if current_customer.x > room_width + 200
+		{
+			current_customer.current_state = ECustomerState.Idle;
+			obj_game_manager.current_state = EGameState.ResumeDay;
+		}
+	}
+	else if day_ended && current_customer == undefined
+	{
+		obj_game_manager.current_state = EGameState.ResumeDay;
+	}
+	
+	if current_state != ESceneState.NonInitialized && !day_ended
 	{
 		current_day_time += 1;
 		current_costumer_total_time += 1;
+		
+		if current_customer && current_costumer_total_time > current_customer.customer_wait_time
+		{
+			customer_failed_count += 1;
+			current_state = ESceneState.HandleTimeout;
+		}
+		
+		if current_day_time > total_day_time
+		{
+			reset_cups();
+			
+			if game_play_text != undefined
+			{
+				instance_destroy(game_play_text);
+				game_play_text = undefined;
+			}
+			
+			if current_customer &&
+			   current_customer.current_state == ECustomerState.Idle
+			{
+				current_customer.current_state = ECustomerState.Leaving;
+			}
+			
+			day_ended = true;
+		}
 	}
 	
 	var drag_valid_states = current_state == ESceneState.CustomerSpeaking ||
 							current_state == ESceneState.CustomerWaitingReceive ||
 							current_state == ESceneState.WaitSelectSomething;
-	
-	if mouse_check_button_pressed(mb_left) && drag_valid_states
-	{
-		var cup_selected_exist = current_cup_selected;
-		var cup_following_cursor = cup_selected_exist && current_cup_selected.following_cursor;
-		var invalid_place = !obj_garbage.is_pressed && !obj_customer.is_pressed;
-		
-		var large_or_medium_pressed = obj_glass_medium.is_pressed || obj_glass_large.is_pressed;
-		var small_or_large_pressed = obj_glass_small.is_pressed || obj_glass_large.is_pressed;
-		var medium_or_small_pressed = obj_glass_medium.is_pressed || obj_glass_small.is_pressed;
 							
-		var other_cup_selected = current_cup_selected_index == 1 && large_or_medium_pressed ||
-								 current_cup_selected_index == 2 && small_or_large_pressed ||
-								 current_cup_selected_index == 3 && medium_or_small_pressed;
-		
-		if cup_selected_exist &&
-		   cup_following_cursor &&
-		   invalid_place &&
-		   !other_cup_selected
+	if drag_valid_states && current_cup_selected != undefined && !day_ended
+	{
+		if current_cup_selected.current_state == EDraggrableState.InTrash
 		{
-			current_cup_selected.following_cursor = false;
-			current_cup_selected.x = obj_interaction_text.x;
-			current_cup_selected.y = obj_interaction_text.y - 100;
-			current_cup_selected.is_pressed = false;
-		}
-		else if cup_selected_exist &&
-				cup_following_cursor &&
-				invalid_place &&
-				other_cup_selected
-		{
-			obj_glass_large.is_pressed = false;
-			obj_glass_medium.is_pressed = false;
-			obj_glass_small.is_pressed = false;
-		}
-		else if current_cup_selected && current_cup_selected.is_pressed && !current_cup_selected.following_cursor
-		{
-			current_cup_selected.is_pressed = false;
-			current_cup_selected.following_cursor = true;
-		}
-		else if current_cup_selected && current_cup_selected.following_cursor && obj_garbage.is_pressed
-		{
-			obj_garbage.is_pressed = false;
-			instance_destroy(current_cup_selected);
+			reset_cups();
+			
+			allow_selecting_cup = true;
+			
 			current_cup_selected = undefined;
+			current_cup_selected_index = 0;
+			
 			reset_ingredients();
-			ds_queue_clear(dialogues_queue);
-			ds_queue_enqueue(dialogues_queue, coffee_size_message);
-			ds_queue_enqueue(dialogues_queue, coffee_grams_message);
-			ds_queue_enqueue(dialogues_queue, milk_water_message);
-			ds_queue_enqueue(dialogues_queue, sugar_message);
-			ds_queue_enqueue(dialogues_queue, sweetener_message);
-			ds_queue_enqueue(dialogues_queue, extra_ingredient_message);
-			
-			current_state = ESceneState.CustomerSpeaking;
 		}
-		else if current_cup_selected && current_cup_selected.following_cursor && obj_customer.is_pressed
+		else if current_cup_selected.current_state == EDraggrableState.DeliveredToCostumer
 		{
-			obj_customer.is_pressed = false;
-			instance_destroy(current_cup_selected);
-			current_cup_selected = undefined;
+			reset_cups();
 			
-			ds_queue_clear(dialogues_queue);
-			ds_queue_enqueue(dialogues_queue, coffee_size_message);
-			ds_queue_enqueue(dialogues_queue, coffee_grams_message);
-			ds_queue_enqueue(dialogues_queue, milk_water_message);
-			ds_queue_enqueue(dialogues_queue, sugar_message);
-			ds_queue_enqueue(dialogues_queue, sweetener_message);
-			ds_queue_enqueue(dialogues_queue, extra_ingredient_message);
-			
+			if game_play_text != undefined
+			{
+				instance_destroy(game_play_text);
+				game_play_text = undefined;
+			}
+
 			if cup_requirement == current_cup_selected_index &&
 			   coffee_requirement == current_coffee &&
 			   milk_requirement == current_milk &&
-			   water_requirement = current_water &&
+			   water_requirement == current_water &&
 			   sugar_requirement == current_sugar &&
 			   sweetener_requirement == current_sweetener &&
 			   chocolate_requirement == current_chocolate &&
 			   cream_requirement == current_cream &&
-			   condensed_milk_requirement == current_condensed_milk 
-			{
-				reset_ingredients();
-				current_state = ESceneState.HandleSucccess;
-			}
-			else 
-			{
-				reset_ingredients();
+			   condensed_milk_requirement == current_condensed_milk
+			 {
+				 customer_success_count += 1;
+				 current_state = ESceneState.HandleSucccess;
+			 }
+			 else 
+			 {
 				current_state = ESceneState.HandleFailed;
-			}
+			 }
 		}
 	}
 	
-	if current_state == ESceneState.NonInitialized
+	if current_state == ESceneState.NonInitialized && !day_ended
 	{
 		// Greetings MESSAGE
 		greeting_message = greetings[0, irandom_range(0, array_length_1d(greetings) - 1)];
 		
 		// Customer Challenge Type
-		customer_type = choose(ECustomerType.StepByStep);
+		customer_type = ECustomerType.StepByStep;
 		
 		// Cup Size
-		cup_requirement = choose(1, 2, 3);
+		cup_requirement = irandom_range(1, 3);
 		
 		// Cup Size MESSAGE
 		coffee_size_message = coffee_size_messages[cup_requirement - 1];
@@ -486,7 +481,7 @@ else if obj_game_manager.current_state == EGameState.WorkDayHandled
 		// Milk Water requirement MESSAGE
 		milk_water_message = mw_item[0];
 		
-		sugar_requirement = choose(1, 2, 3, 4, 5);
+		sugar_requirement = irandom_range(1, 5);
 		
 		// Sugar MESSAGE
 		sugar_message = "With " + string(sugar_requirement) + " tablespoons of sugar.";
@@ -496,7 +491,11 @@ else if obj_game_manager.current_state == EGameState.WorkDayHandled
 		// Sweetener MESSAGE
 		sweetener_message = "With " + string(sweetener_requirement) + " sweetener drops.";
 		
-		var extra_ingredient = choose(1, 2, 3);
+		var extra_ingredient = irandom_range(1, 3);
+		
+		chocolate_requirement = 0;
+		cream_requirement = 0;
+		condensed_milk_requirement = 0;
 		
 		if extra_ingredient == 1
 		{
@@ -521,18 +520,32 @@ else if obj_game_manager.current_state == EGameState.WorkDayHandled
 		mesaage_fail_preparation = messages_fail_preparation[0, irandom_range(0, array_length_1d(messages_fail_preparation) - 1)];
 		
 		// Customer Creation
-		current_customer = instance_create_layer(customer_spawn_pos_x, customer_spawn_pos_y, "Customer", obj_customer);
+		if current_customer == undefined
+		{
+			current_customer = instance_create_layer(customer_spawn_pos_x, customer_spawn_pos_y, "Customer", obj_customer);
+		}
+		
+		current_costumer_total_time = 0;
+		current_customer.customer_wait_time = irandom_range(2500, 3000);
+		
 		current_customer.current_state = ECustomerState.Entering;
 		
 		obj_customer_final_position.active = true;
 		
-		current_speak_delay = choose(2, 3, 4);
+		current_speak_delay = irandom_range(2, 4);
 		
 		set_interaction_hover_enabled_global(objects_array, true);
 		
 		reset_ingredients();
 		
 		customer_time_between_message = irandom_range(100, 120);
+		
+		if ds_queue_size(dialogues_queue) > 0
+		{
+			ds_queue_clear(dialogues_queue);
+		}
+		
+		current_cup_selected_index = 0;
 		
 		ds_queue_enqueue(dialogues_queue, coffee_size_message);
 		ds_queue_enqueue(dialogues_queue, coffee_grams_message);
@@ -543,14 +556,14 @@ else if obj_game_manager.current_state == EGameState.WorkDayHandled
 		
 		current_state = ESceneState.CustomerEntering;
 	}
-	else if current_state == ESceneState.CustomerEntering
+	else if current_state == ESceneState.CustomerEntering && !day_ended
 	{
 		if current_customer.current_state == ECustomerState.Idle
 		{
 			current_state = ESceneState.CustomerGreeting;
 		}
 	}
-	else if current_state == ESceneState.CustomerGreeting
+	else if current_state == ESceneState.CustomerGreeting && !day_ended
 	{
 		if game_play_text == undefined
 		{
@@ -558,62 +571,154 @@ else if obj_game_manager.current_state == EGameState.WorkDayHandled
 			game_play_text.content = greeting_message;
 			game_play_text.char_delay =  current_speak_delay;
 		}
-		else if game_play_text && game_play_text.finished && mouse_check_button_pressed(mb_left)
+		else if game_play_text && !game_play_text.finished && mouse_check_button_pressed(mb_left)
 		{
 			game_play_text.skip = true;
 		}
-		else if game_play_text && game_play_text.finished
+		else if game_play_text && game_play_text.finished && mouse_check_button_pressed(mb_left)
 		{
 			current_state = ESceneState.CustomerSpeaking;
 		}
 	}
-	else if current_state == ESceneState.CustomerSpeaking
+	else if current_state == ESceneState.CustomerSpeaking && !day_ended
 	{
 		if ds_queue_size(dialogues_queue) > 0 && game_play_text == undefined
 		{
 			var text = ds_queue_dequeue(dialogues_queue);
+			
 			game_play_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
 			game_play_text.content = text;
 			game_play_text.char_delay =  current_speak_delay;
 		}
-		else if ds_queue_size(dialogues_queue) < 1
+		else if ds_queue_size(dialogues_queue) == 0
 		{
-			if game_play_text
-			{
-				instance_destroy(game_play_text);
-				game_play_text = undefined;
-			}
-			
 			current_state = ESceneState.CustomerWaitingReceive;
 		}
 		else if game_play_text.finished
 		{
-			instance_destroy(game_play_text);
-			game_play_text = undefined;
 			current_state = ESceneState.WaitSelectSomething;
 		}
 	}
-	else if current_state == ESceneState.WaitSelectSomething
+	else if current_state == ESceneState.WaitSelectSomething && !day_ended
 	{	
 		customer_message_accum_time += 1;
 		
 		if customer_message_accum_time > customer_time_between_message
 		{
+			instance_destroy(game_play_text);
+			game_play_text = undefined;
 			customer_message_accum_time = 0;
 			current_state = ESceneState.CustomerSpeaking;
 		}
 	}
-	else if current_state == ESceneState.CustomerWaitingReceive
+	else if current_state == ESceneState.CustomerWaitingReceive && !day_ended
 	{
 		
 	}
-	else if current_state == ESceneState.HandleFailed
+	else if current_state == ESceneState.HandleFailed && !day_ended
 	{
+		if game_play_text == undefined
+		{
+			game_play_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
+			game_play_text.content = mesaage_fail_preparation;
+			game_play_text.char_delay =  current_speak_delay;
+		}
+		else if game_play_text && !game_play_text.finished && mouse_check_button_pressed(mb_left)
+		{
+			game_play_text.skip = true;
+		}
+		else if game_play_text && game_play_text.finished && mouse_check_button_pressed(mb_left)
+		{
+			allow_selecting_cup = true;
+			
+			current_cup_selected_index = 0;
+			
+			reset_ingredients();
+			
+			ds_queue_clear(dialogues_queue);
+			
+			ds_queue_enqueue(dialogues_queue, coffee_size_message);
+			ds_queue_enqueue(dialogues_queue, coffee_grams_message);
+			ds_queue_enqueue(dialogues_queue, milk_water_message);
+			ds_queue_enqueue(dialogues_queue, sugar_message);
+			ds_queue_enqueue(dialogues_queue, sweetener_message);
+			ds_queue_enqueue(dialogues_queue, extra_ingredient_message);
+			
+			instance_destroy(game_play_text);
+			game_play_text = undefined;
+			
+			current_state = ESceneState.CustomerSpeaking;
+		}
+	}
+	else if current_state == ESceneState.HandleTimeout && !day_ended
+	{
+		if game_play_text == undefined && current_customer.current_state == ECustomerState.Idle
+		{
+			game_play_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
+			game_play_text.content = message_fail_time;
+			game_play_text.char_delay =  current_speak_delay;
+		}
+		else if game_play_text && !game_play_text.finished && mouse_check_button_pressed(mb_left) && current_customer.current_state == ECustomerState.Idle
+		{
+			game_play_text.skip = true;
+		}
+		else if game_play_text && game_play_text.finished && mouse_check_button_pressed(mb_left)
+		{
+			instance_destroy(game_play_text);
+			game_play_text = undefined;
+			
+			if current_customer && current_customer.current_state == ECustomerState.Idle
+			{
+				current_customer.current_state = ECustomerState.Leaving;
+			}
+		}
 		
+		if current_customer && current_customer.x > room_width + 200
+		{
+			reset_cups();
+			
+			allow_selecting_cup = true;
+			current_state = ESceneState.NonInitialized;
+		}
+	}
+	else if current_state == ESceneState.HandleSucccess && !day_ended
+	{
+		if game_play_text == undefined && current_customer.current_state == ECustomerState.Idle
+		{
+			game_play_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
+			game_play_text.content = message_success;
+			game_play_text.char_delay =  current_speak_delay;
+		}
+		else if game_play_text && !game_play_text.finished && mouse_check_button_pressed(mb_left) && current_customer.current_state == ECustomerState.Idle
+		{
+			game_play_text.skip = true;
+		}
+		else if game_play_text && game_play_text.finished && mouse_check_button_pressed(mb_left)
+		{
+			instance_destroy(game_play_text);
+			game_play_text = undefined;
+			
+			reset_cups();
+			
+			if current_customer && current_customer.current_state == ECustomerState.Idle
+			{
+				current_customer.current_state = ECustomerState.Leaving;
+			}
+		}
+		
+		if current_customer && current_customer.x > room_width + 200
+		{
+			allow_selecting_cup = true;
+			current_state = ESceneState.NonInitialized;
+		}
 	}
 }
 
-
+#endregion
+else if obj_game_manager.current_state == EGameState.ResumeDay
+{
+	show_debug_message("DAY ENDED AND IM IN THE RESUMEEEE");
+}
 
 
 

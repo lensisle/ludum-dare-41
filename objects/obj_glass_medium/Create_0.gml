@@ -6,3 +6,5 @@ event_inherited();
 
 original_position_x = x;
 original_position_y = y;
+
+current_state = EDraggrableState.Idle;

@@ -704,6 +704,25 @@
             }
         },
         {
+            "Key": "81be6e25-d2ea-49e4-9bfe-03e21529ce42",
+            "Value": {
+                "id": "a1e16472-b2c4-4b18-b800-b20e0ef6bce7",
+                "modelName": "GMResourceInfo",
+                "mvc": "1.0",
+                "configDeltaFiles": [
+                    
+                ],
+                "configDeltas": [
+                    
+                ],
+                "resourceCreationConfigs": [
+                    "default"
+                ],
+                "resourcePath": "scripts\/reset_cups\/reset_cups.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "87c3d41c-9ab2-44dc-a57c-25a50ed83d3b",
             "Value": {
                 "id": "71851135-053a-401b-9442-e9cf66e40a65",
@@ -852,6 +871,25 @@
                     "default"
                 ],
                 "resourcePath": "objects\/obj_coffee\/obj_coffee.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "ab89961e-0484-448b-a2ae-3966a8f33c29",
+            "Value": {
+                "id": "0663466a-5748-47da-add2-a98a436c375b",
+                "modelName": "GMResourceInfo",
+                "mvc": "1.0",
+                "configDeltaFiles": [
+                    
+                ],
+                "configDeltas": [
+                    
+                ],
+                "resourceCreationConfigs": [
+                    "default"
+                ],
+                "resourcePath": "objects\/obj_glass_small\/obj_glass_small.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -1411,7 +1449,8 @@
         "52c2fbf1-7921-4db4-b254-d2a6f9c6320f",
         "b0c7045c-e123-4b69-9da0-4cce7796afcb",
         "7f20b45c-d8d4-45df-b58d-036ff370b9cb",
-        "87c3d41c-9ab2-44dc-a57c-25a50ed83d3b"
+        "87c3d41c-9ab2-44dc-a57c-25a50ed83d3b",
+        "81be6e25-d2ea-49e4-9bfe-03e21529ce42"
     ],
     "tutorial": ""
 }
