@@ -107,14 +107,14 @@ if obj_game_manager.current_state == EGameState.Tutorial
 		if obj_glass_small.is_pressed && !speaking_extras
 		{
 			speaking_extras = true;
-			extras_text = instance_create_layer(boss.x - 300, boss.y, "Texts", obj_text);
+			extras_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
 			extras_text.content = "That’s small, big guy.\nGive me the medium one.";
 			extras_text.char_delay = 2;
 		}
 		else if obj_glass_large.is_pressed && !speaking_extras
 		{
 			speaking_extras = true;
-			extras_text = instance_create_layer(boss.x - 300, boss.y, "Texts", obj_text);
+			extras_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
 			extras_text.content = "That’s large.\nAnd too much coffee makes me go down the toilet.\nGive me the medium one.";
 			extras_text.char_delay = 2;
 		}
@@ -160,7 +160,7 @@ if obj_game_manager.current_state == EGameState.Tutorial
 			if !speaking_extras
 			{
 				speaking_extras = true;
-				extras_text = instance_create_layer(boss.x - 300, boss.y, "Texts", obj_text);
+				extras_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
 				extras_text.content = "That’s not what I tell you, the coffee is ruined.\nGet rid of that cup and let’s start over.";
 				extras_text.char_delay = 2;
 			}
@@ -219,7 +219,7 @@ if obj_game_manager.current_state == EGameState.Tutorial
 			if !speaking_extras
 			{
 				speaking_extras = true;
-				extras_text = instance_create_layer(boss.x - 300, boss.y, "Texts", obj_text);
+				extras_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
 				extras_text.content = "That’s not what I tell you, the coffee is ruined.\nGet rid of that cup and let’s start over.";
 				extras_text.char_delay = 2;
 			}
@@ -263,7 +263,7 @@ if obj_game_manager.current_state == EGameState.Tutorial
 			if !speaking_extras
 			{
 				speaking_extras = true;
-				extras_text = instance_create_layer(boss.x - 300, boss.y, "Texts", obj_text);
+				extras_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
 				extras_text.content = "That’s not what I tell you, the coffee is ruined.\nGet rid of that cup and let’s start over.";
 				extras_text.char_delay = 2;
 			}
