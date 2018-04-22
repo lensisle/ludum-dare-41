@@ -7,13 +7,13 @@ if mouse_x >= x && mouse_x <= x + obj_width && mouse_y >= y && mouse_y <= y + ob
 	if mouse_check_button_pressed(mb_left)
 	{
 		is_pressed = true;
-		show_debug_message("is pressed " + object_get_name(object_index));
+		// show_debug_message("is pressed " + object_get_name(object_index));
 	}
 	
 	if mouse_check_button_released(mb_left)
 	{
 		is_pressed = false;
-		show_debug_message("is released " + object_get_name(object_index));
+		// show_debug_message("is released " + object_get_name(object_index));
 	}
 	
 	if draggable && mouse_check_button_pressed(mb_left) && !following_cursor

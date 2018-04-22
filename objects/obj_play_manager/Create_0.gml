@@ -71,7 +71,8 @@ dialogues = [
 	"I can see it in your face.",
 	"You are going to love this.",
 	"Here comes the first customer",
-	"You’re going to do a great job"
+	"You’re going to do a great job",
+	"action_finish" // final action
 ];
 
 current_tutorial_state = ETutorialState.BossSpawn;

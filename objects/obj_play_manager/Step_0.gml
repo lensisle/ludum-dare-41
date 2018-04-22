@@ -4,6 +4,7 @@ if obj_game_manager.current_state == EGameState.Tutorial
 {
 	if current_tutorial_state == ETutorialState.BossSpawn
 	{
+		show_debug_message("Spawning costumer");
 		current_customer = instance_create_layer(customer_spawn_pos_x, customer_spawn_pos_y, "Customer", obj_customer);
 		current_customer.current_state = ECustomerState.Entering;
 		current_tutorial_state = ETutorialState.BossEntering;
@@ -79,6 +80,11 @@ if obj_game_manager.current_state == EGameState.Tutorial
 			
 			dialogues_index += 1;
 		}
+		else if dialogues[dialogues_index] == "action_finish"
+		{
+			current_customer.current_state = ECustomerState.Leaving;
+			current_tutorial_state = ETutorialState.EndTutorial;
+		}
 		else 
 		{
 			if current_text == undefined
@@ -120,6 +126,10 @@ if obj_game_manager.current_state == EGameState.Tutorial
 		}
 		else if obj_glass_medium.is_pressed && !speaking_extras
 		{
+			obj_glass_small.interaction_hover_enabled = false;
+			obj_glass_large.interaction_hover_enabled = false;
+			obj_glass_medium.interaction_hover_enabled = false;
+			
 			current_cup_selected = instance_create_layer(obj_interaction_text.x, obj_interaction_text.y - 100, "Table_Element", obj_glass_medium);
 			current_tutorial_state = ETutorialState.BossSpeaking
 		}
@@ -141,6 +151,7 @@ if obj_game_manager.current_state == EGameState.Tutorial
 	{
 		if current_coffee >= 5
 		{
+			obj_coffee.interaction_hover_enabled = false;
 			current_tutorial_state = ETutorialState.BossSpeaking;
 		}
 		else if obj_coffee.is_pressed
@@ -153,6 +164,8 @@ if obj_game_manager.current_state == EGameState.Tutorial
 	{
 		if current_water == 2 && current_milk == 1
 		{
+			obj_water_dispenser.interaction_hover_enabled = false;
+			obj_milk_dispenser.interaction_hover_enabled = false;
 			current_tutorial_state = ETutorialState.BossSpeaking;
 		}
 		else if current_water > 2 || current_milk > 1
@@ -212,6 +225,8 @@ if obj_game_manager.current_state == EGameState.Tutorial
 	{
 		if current_sugar == 2 && current_sweetener == 10
 		{
+			obj_sugar.interaction_hover_enabled = false;
+			obj_sweetener.interaction_hover_enabled = false;
 			current_tutorial_state = ETutorialState.BossSpeaking;
 		}
 		else if current_sugar > 2 || current_sweetener > 10
@@ -256,6 +271,10 @@ if obj_game_manager.current_state == EGameState.Tutorial
 	{
 		if current_chocolate == 1 && current_cream == 1 && current_condensed_milk == 1
 		{
+			obj_chocolate.interaction_hover_enabled = false;
+			obj_cream.interaction_hover_enabled = false;
+			obj_condensed_milk.interaction_hover_enabled = false;
+			
 			current_tutorial_state = ETutorialState.BossSpeaking;
 		}
 		else if current_chocolate > 1 || current_cream > 1 && current_condensed_milk > 1
@@ -308,17 +327,22 @@ if obj_game_manager.current_state == EGameState.Tutorial
 		{
 			current_tutorial_state = ETutorialState.BossSpeaking;
 			current_customer.is_pressed = false;
+			instance_destroy(current_cup_selected);
+			current_cup_selected = undefined;
+		}
+	}
+	else if current_tutorial_state == ETutorialState.EndTutorial
+	{
+		if current_customer && current_customer.x > room_width + 200
+		{
+			show_debug_message("ending tutorial");
+			instance_destroy(current_customer);
+			current_customer = undefined;
+			current_state = EGameState.WorkDay;
+			reset_ingredients();
 		}
 	}
 }
-else 
-{
-	switch current_state
-	{
-		case ESceneState.NonInitialized:
-			var customer = instance_create_layer(customer_spawn_pos_x, customer_spawn_pos_y, "Customer", obj_customer);
-			customer.current_state = ECustomerState.Entering;
-			current_state = ESceneState.CustomerEntering;
-			break;
-	}	
-}
+
+
+
