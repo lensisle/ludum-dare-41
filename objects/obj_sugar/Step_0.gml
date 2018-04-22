@@ -6,9 +6,12 @@ event_inherited();
 
 with obj_play_manager
 {
-	if other.is_pressed && obj_game_manager.current_state != EGameState.Tutorial
+	if other.is_pressed &&
+	   obj_game_manager.current_state != EGameState.Tutorial &&
+	   check_press_available(current_state)
 	{
 		other.is_pressed = false;
 		current_sugar += 1;
+		last_pressed_item = other.object_index;
 	}
 }

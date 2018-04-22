@@ -89,9 +89,10 @@ enum ESceneState
 {
 	NonInitialized,
 	CustomerEntering,
-	CustomerGreeting,
-	CustomerCupSize,
+	CustomerSpeaking,
 	WaitSelectSomething,
+	CustomerWaitingReceive,
+	HandleFailed,
 	CustomerLeaving
 }
 
@@ -208,7 +209,9 @@ messages_fail_preparation = [
 ];
 
 current_day_time = 0;
-current_costumer_time = 0;
+current_costumer_total_time = 0;
+customer_time_between_message = 15;
+customer_message_accum_time = 0;
 
 current_customer = undefined;
 current_cup_selected = undefined;
@@ -234,6 +237,8 @@ message_success = "";
 message_fail_time = "";
 mesaage_fail_preparation = "";
 
+dialogues_queue = ds_queue_create();
+
 cup_requirement = 0;
 
 coffee_requirement = 0;
@@ -257,5 +262,7 @@ customer_type = ECustomerType.None;
 game_play_text = undefined;
 
 current_speak_delay = 2;
+
+last_pressed_item = undefined;
 
 #endregion
