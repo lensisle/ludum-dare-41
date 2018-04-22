@@ -110,28 +110,28 @@ coffee_size_messages = [
 ];
 
 milk_water_messages_large = [
-	"Just milk please.",
-	"Can you put more milk than water?",
-	"Put half water, and half milk.",
-	"Put half water, and half milk.",
-	"Put Water, and a just a tiny bit of milk.",
-	"Put 3/4 of water, and the rest with milk.",
-	"Can you put more water than milk?",
-	"Without milk please."
+	["Just milk please.", 0, 4],
+	["Can you put more milk than water?", 1, 3],
+	["Put half water, and half milk.", 2, 2],
+	["Put half water, and half milk.", 2, 2],
+	["Put Water, and a just a tiny bit of milk.", 3, 1],
+	["Put 3/4 of water, and the rest with milk.", 3, 1],
+	["Can you put more water than milk?", 3, 1],
+	["Without milk please.", 4, 0]
 ];
 
 milk_water_messages_medium = [
-	"Put water, and a tiny bit of milk.",
-	"Just full water.",
-	"Just full milk.",
-	"Put more milk than water.",
-	"Put more water than milk."
+	["Put water, and a tiny bit of milk.", 2, 1],
+	["Just full water.", 3, 0],
+	["Just full milk.", 0, 3],
+	["Put more milk than water.", 1, 2],
+	["Put more water than milk.", 2, 1]
 ];
 
 milk_water_messages_small = [
-	"Put half water, and half milk",
-	"Just water please",
-	"Just milk please"
+	["Put half water, and half milk", 1, 1],
+	["Just water please", 1, 0],
+	["Just milk please", 0, 1]
 ];
 
 close_message_success = [
@@ -154,7 +154,7 @@ close_message_success = [
 	"Perfect."
 ];
 
-close_message_fail = [
+close_message_fail_time = [
 	"You take too long! I’m out.",
 	"Can you be more slow? I’m going to buy in Planetbucks.",
 	"I can’t wait any longer, forget the coffee!",
