@@ -6,3 +6,4 @@ interaction_text = "default interaction text " + string(image_xscale) + " " + st
 interaction_hover_enabled = false;
 draggable = false;
 following_cursor = false;
+image_speed = 0;

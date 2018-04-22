@@ -6,6 +6,6 @@ enum EGameState
 	WorkDayNormal
 }
 
-current_state = EGameState.WorkDayHandled;
+current_state = EGameState.Tutorial;
 current_work_day = 1;
 current_score = 0;

@@ -28,6 +28,6 @@ else
 
 if following_cursor
 {
-	x = mouse_x;
-	y = mouse_y;
+	x = mouse_x - (obj_width * 0.5) + 16;
+	y = mouse_y - (obj_height * 0.5) + 16;
 }

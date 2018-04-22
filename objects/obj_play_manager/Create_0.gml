@@ -89,10 +89,13 @@ enum ESceneState
 {
 	NonInitialized,
 	CustomerEntering,
+	CustomerGreeting,
 	CustomerSpeaking,
 	WaitSelectSomething,
 	CustomerWaitingReceive,
 	HandleFailed,
+	HandleSucccess,
+	HandleTimeout,
 	CustomerLeaving
 }
 
