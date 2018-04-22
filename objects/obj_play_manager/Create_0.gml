@@ -134,7 +134,7 @@ milk_water_messages_small = [
 	["Just milk please", 0, 1]
 ];
 
-close_message_success = [
+close_messages_success = [
 	"Thank you.",
 	"This better be good.",
 	"Finally!",
@@ -154,13 +154,26 @@ close_message_success = [
 	"Perfect."
 ];
 
-close_message_fail_time = [
+close_messages_fail_time = [
 	"You take too long! I’m out.",
 	"Can you be more slow? I’m going to buy in Planetbucks.",
 	"I can’t wait any longer, forget the coffee!",
 	"You suck. Bye.",
 	"I don’t have time for this, I’m out.",
 	"You take too long, goodbye."
+];
+
+messages_fail_preparation = [
+	"This is not what I order! Make another one.",
+	"Hey! This is not my coffee, please make me another one.",
+	"You do this wrong, can you make me another with my specifications this time?",
+	"Did you listen what a ask you to do? please make me another one.",
+	"This is wrong, you make me a different coffee. Make another, please.",
+	"Disgusting! This is not what I order, make it right this time.",
+	"You mix up my specifications, make another one please.",
+	"You are wrong handsome, put attention this time.",
+	"Oh boy, this is disgusting, please make me another one.",
+	"Great coffee, but not what I orden. Make me one more, please."
 ];
 
 current_customer = undefined;
