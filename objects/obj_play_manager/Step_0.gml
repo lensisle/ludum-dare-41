@@ -83,7 +83,7 @@ if obj_game_manager.current_state == EGameState.Tutorial
 		{
 			if current_text == undefined
 			{
-				current_text = instance_create_layer(boss.x - 300, boss.y, "Texts", obj_text);
+				current_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
 				current_text.content = dialogues[dialogues_index];
 				current_text.char_delay = 2;
 			}
