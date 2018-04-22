@@ -1,4 +1,4 @@
-manage_cursor_sprite(objects_array);
+manage_cursor_sprite(objects_array, obj_game_manager.current_state != EGameState.Tutorial);
 
 if obj_game_manager.current_state == EGameState.Tutorial
 {
@@ -338,23 +338,134 @@ if obj_game_manager.current_state == EGameState.Tutorial
 			show_debug_message("ending tutorial");
 			instance_destroy(current_customer);
 			current_customer = undefined;
-			current_state = EGameState.WorkDayHandled;
 			reset_ingredients();
+			obj_game_manager.current_state = EGameState.WorkDayHandled;
 		}
 	}
 }
-
-if obj_game_manager.current_state == EGameState.WorkDayHandled
+else if obj_game_manager.current_state == EGameState.WorkDayHandled
 {
+	if current_state != ESceneState.NonInitialized
+	{
+		current_day_time += 1;
+		current_costumer_time += 1;
+	}
+	
 	if current_state == ESceneState.NonInitialized
 	{
+		// Greetings
+		greeting_message = greetings[0, irandom_range(0, array_length_1d(greetings) - 1)];
+		
+		// Customer Challenge Type
 		customer_type = choose(ECustomerType.StepByStep);
+		
+		// Cup Size
 		cup_requirement = choose(1, 2, 3);
+		coffee_size_message = coffee_size_messages[cup_requirement - 1];
 		
-		// todo: add the other procedural things
+		// Coffee Grams
+		coffee_requirement = irandom_range(1, 10);
+		coffee_grams_message = "With " + string(coffee_requirement) + " grams of coffee.";
 		
+		var mw_item;
+		
+		// Milk Water Selection
+		if cup_requirement == 3
+		{
+			mw_item = milk_water_messages_large[0, array_length_1d(milk_water_messages_large) - 1];
+		}
+		else if cup_requirement == 2
+		{
+			mw_item = milk_water_messages_medium[0, array_length_1d(milk_water_messages_medium) - 1];
+		}
+		else if cup_requirement == 1
+		{
+			mw_item = milk_water_messages_small[0, array_length_1d(milk_water_messages_small) - 1];
+		}
+		
+		water_requirement = mw_item[1];
+		milk_requirement = mw_item[2];
+		milk_water_message = mw_item[0];
+		
+		sugar_requirement = choose(1, 2, 3, 4, 5);
+		sugar_message = "With " + string(sugar_requirement) + " tablespoons of sugar.";
+		
+		sweetener_requirement = irandom_range(1, 15);
+		sweetener_message = "With " + string(sweetener_requirement) + " sweetener drops.";
+		
+		var extra_ingredient = choose(1, 2, 3);
+		
+		if extra_ingredient == 1
+		{
+			chocolate_requirement = 1;
+			extra_ingredient_message = "and chocolate.";
+		}
+		else if extra_ingredient == 2
+		{
+			cream_requirement = 1;
+			extra_ingredient_message = "and cream.";
+		}
+		else if extra_ingredient == 3
+		{
+			condensed_milk_requirement = 1;
+			extra_ingredient_message = "and condensed milk.";
+		}
+		
+		message_success = close_messages_success[0, irandom_range(0, array_length_1d(close_messages_success) - 1)];
+		
+		message_fail_time = close_messages_fail_time[0, irandom_range(0, array_length_1d(close_messages_fail_time) - 1)];
+		
+		mesaage_fail_preparation = messages_fail_preparation[0, irandom_range(0, array_length_1d(messages_fail_preparation) - 1)];
+		
+		// Customer Creation
 		current_customer = instance_create_layer(customer_spawn_pos_x, customer_spawn_pos_y, "Customer", obj_customer);
 		current_customer.current_state = ECustomerState.Entering;
+		
+		obj_customer_final_position.active = true;
+		
+		current_speak_delay = choose(2, 3, 4);
+		
+		set_interaction_hover_enabled_global(objects_array, true);
+		
+		current_state = ESceneState.CustomerEntering;
+	}
+	else if current_state == ESceneState.CustomerEntering
+	{
+		if current_customer.current_state == ECustomerState.Idle
+		{
+			game_play_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
+			game_play_text.content = greeting_message;
+			game_play_text.char_delay =  current_speak_delay;
+			current_state = ESceneState.CustomerGreeting;
+		}
+	}
+	else if current_state == ESceneState.CustomerGreeting
+	{
+		if game_play_text.finished && mouse_check_button_pressed(mb_left)
+		{
+			instance_destroy(game_play_text);
+			game_play_text = undefined;
+			current_state = ESceneState.CustomerCupSize;
+		}
+	}
+	else if current_state == ESceneState.CustomerCupSize
+	{
+		if game_play_text == undefined 
+		{
+			game_play_text = instance_create_layer(current_customer.x - 300, current_customer.y, "Texts", obj_text);
+			game_play_text.content = coffee_size_message;
+			game_play_text.char_delay =  current_speak_delay;
+		}
+		else if game_play_text && game_play_text.finished && mouse_check_button_pressed(mb_left)
+		{
+			instance_destroy(game_play_text);
+			game_play_text = undefined;
+			current_state = ESceneState.WaitSelectSomething;
+		}
+	}
+	else if current_state == ESceneState.WaitSelectSomething
+	{
+		
 	}
 }
 

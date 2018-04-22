@@ -4,7 +4,16 @@
     "mvc": "1.0",
     "name": "obj_milk_dispenser",
     "eventList": [
-        
+        {
+            "id": "70a7c48f-a470-4ef5-a94a-1d0e08ef55e6",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "78939ad7-f7f0-4d3f-960a-fe244911dc5e"
+        }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,

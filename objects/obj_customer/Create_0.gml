@@ -8,6 +8,7 @@ enum ECustomerState
 current_state = ECustomerState.Idle;
 customer_life = 10;
 customer_speed = 5;
+customer_wait_time = 20;
 
 image_index = 0;
 image_speed = 0;

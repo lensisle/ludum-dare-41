@@ -85,6 +85,37 @@ extras_text = undefined;
 
 #region GAME_STUFF
 
+enum ESceneState
+{
+	NonInitialized,
+	CustomerEntering,
+	CustomerGreeting,
+	CustomerCupSize,
+	WaitSelectSomething,
+	CustomerLeaving
+}
+
+enum ECustomerType
+{
+	None,
+	StepByStep
+}
+
+objects_array = [
+	obj_glass_large,
+	obj_glass_medium,
+	obj_glass_small,
+	obj_sugar,
+	obj_coffee,
+	obj_chocolate,
+	obj_cream,
+	obj_condensed_milk,
+	obj_milk_dispenser,
+	obj_water_dispenser,
+	obj_garbage,
+	obj_sweetener
+];
+
 // DATA
 
 greetings = [
@@ -176,8 +207,12 @@ messages_fail_preparation = [
 	"Great coffee, but not what I orden. Make me one more, please."
 ];
 
+current_day_time = 0;
+current_costumer_time = 0;
+
 current_customer = undefined;
 current_cup_selected = undefined;
+current_cup_selected_index = 0;
 current_sugar = 0;
 current_coffee = 0;
 current_chocolate = 0;
@@ -187,48 +222,40 @@ current_milk = 0;
 current_water = 0;
 current_sweetener = 0;
 
+greeting_message = "";
+coffee_size_message = "";
+coffee_grams_message = "";
+milk_water_message = "";
+sugar_message = "";
+sweetener_message = "";
+extra_ingredient_message = "";
+
+message_success = "";
+message_fail_time = "";
+mesaage_fail_preparation = "";
+
 cup_requirement = 0;
-sugar_requirement = 0;
+
 coffee_requirement = 0;
+
+milk_requirement = 0;
+water_requirement = 0;
+
+sugar_requirement = 0;
+sweetener_requirement = 0;
+
 chocolate_requirement = 0;
 cream_requirement = 0;
 condensed_milk_requirement = 0;
-milk_requirement = 0;
-water_requirement = 0;
-sweetener_requirement = 0;
-
-enum ESceneState
-{
-	NonInitialized,
-	CustomerEntering,
-	CustomerLeaving
-}
-
-enum ECustomerType
-{
-	None,
-	StepByStep
-}
-
-objects_array = [
-	obj_glass_large,
-	obj_glass_medium,
-	obj_glass_small,
-	obj_sugar,
-	obj_coffee,
-	obj_chocolate,
-	obj_cream,
-	obj_condensed_milk,
-	obj_milk_dispenser,
-	obj_water_dispenser,
-	obj_garbage,
-	obj_sweetener
-];
 
 customer_spawn_pos_x = room_width + 200;
 customer_spawn_pos_y = 100;
 
 current_state = ESceneState.NonInitialized;
 customer_type = ECustomerType.None;
+
+game_play_text = undefined;
+
+current_speak_delay = 2;
 
 #endregion

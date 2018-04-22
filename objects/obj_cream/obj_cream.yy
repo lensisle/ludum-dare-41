@@ -4,7 +4,16 @@
     "mvc": "1.0",
     "name": "obj_cream",
     "eventList": [
-        
+        {
+            "id": "61a14a4c-8d38-4249-b103-f80ef50b18c6",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "c2db32d6-3b55-482e-98c1-26a2f7b16e81"
+        }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,

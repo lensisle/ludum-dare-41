@@ -4,7 +4,16 @@
     "mvc": "1.0",
     "name": "obj_water_dispenser",
     "eventList": [
-        
+        {
+            "id": "9e835391-29c7-450c-8e08-660c5d4a102d",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "c4b5077f-f7b0-40cd-a6a0-b957d5069849"
+        }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,

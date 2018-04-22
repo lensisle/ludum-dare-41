@@ -4,7 +4,16 @@
     "mvc": "1.0",
     "name": "obj_glass_small",
     "eventList": [
-        
+        {
+            "id": "7f10ad20-56ec-4e78-9d9c-6e0a54978455",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "1b75c5c9-c3b4-46dc-b585-f5f4deb3e287"
+        }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,
