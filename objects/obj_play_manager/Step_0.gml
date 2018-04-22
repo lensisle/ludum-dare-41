@@ -338,11 +338,35 @@ if obj_game_manager.current_state == EGameState.Tutorial
 			show_debug_message("ending tutorial");
 			instance_destroy(current_customer);
 			current_customer = undefined;
-			current_state = EGameState.WorkDay;
+			current_state = EGameState.WorkDayHandled;
 			reset_ingredients();
 		}
 	}
 }
+
+if obj_game_manager.current_state == EGameState.WorkDayHandled
+{
+	if current_state == ESceneState.NonInitialized
+	{
+		customer_type = choose(ECustomerType.StepByStep);
+		cup_requirement = choose(1, 2, 3);
+		
+		// todo: add the other procedural things
+		
+		current_customer = instance_create_layer(customer_spawn_pos_x, customer_spawn_pos_y, "Customer", obj_customer);
+		current_customer.current_state = ECustomerState.Entering;
+	}
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

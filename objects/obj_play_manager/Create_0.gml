@@ -42,7 +42,7 @@ dialogues = [
 	"The small has 200 ml. and large has 400 ml.",
 	"Every time you use the water or\nmilk dispenser, you fill it with 100 ml.",
 	"If you exceed the capacity of the cup,\nthe coffee is ruined.",
-	"So, having that in mind, give me ⅔ of\nwater, and the rest fill it with milk.",
+	"So, having that in mind, give me 2/3 of\nwater, and the rest fill it with milk.",
 	"action_water", // third action
 	"Wonderful big guy, you are made to do this job.",
 	"The next step is the sugar.",
@@ -85,6 +85,84 @@ extras_text = undefined;
 
 #region GAME_STUFF
 
+// DATA
+
+greetings = [
+	"Sup! I want a",
+	"Hello there! Can you give me a",
+	"Hi, I need a",
+	"Good day! Give me a",
+	"Ok, a",
+	"Hey, how its going, I want a",
+	"Hello, I need a",
+	"So, I want a",
+	"Hey cutie, give me a",
+	"Quick! a",
+	"My favorite place! I want a",
+	"Custom coffee? Awesome! Give me a",
+	"I need coffee. And quick. Give me a"
+];
+
+coffee_size_messages = [
+	"Large one, please.",
+	"Medium one, please.",
+	"Small one, please."
+];
+
+milk_water_messages_large = [
+	"Just milk please.",
+	"Can you put more milk than water?",
+	"Put half water, and half milk.",
+	"Put half water, and half milk.",
+	"Put Water, and a just a tiny bit of milk.",
+	"Put 3/4 of water, and the rest with milk.",
+	"Can you put more water than milk?",
+	"Without milk please."
+];
+
+milk_water_messages_medium = [
+	"Put water, and a tiny bit of milk.",
+	"Just full water.",
+	"Just full milk.",
+	"Put more milk than water.",
+	"Put more water than milk."
+];
+
+milk_water_messages_small = [
+	"Put half water, and half milk",
+	"Just water please",
+	"Just milk please"
+];
+
+close_message_success = [
+	"Thank you.",
+	"This better be good.",
+	"Finally!",
+	"Thank you handsome.",
+	"Yey!",
+	"Wonderful.",
+	"Coffee, coffee, coffee!",
+	"This smells great.",
+	"Lovely.",
+	"Thanks!",
+	"I love coffee.",
+	"Coffee is love.",
+	"You’re the best!",
+	"You rock.",
+	"Thanks sweety!",
+	"Awesome!",
+	"Perfect."
+];
+
+close_message_fail = [
+	"You take too long! I’m out.",
+	"Can you be more slow? I’m going to buy in Planetbucks.",
+	"I can’t wait any longer, forget the coffee!",
+	"You suck. Bye.",
+	"I don’t have time for this, I’m out.",
+	"You take too long, goodbye."
+];
+
 current_customer = undefined;
 current_cup_selected = undefined;
 current_sugar = 0;
@@ -96,10 +174,27 @@ current_milk = 0;
 current_water = 0;
 current_sweetener = 0;
 
+cup_requirement = 0;
+sugar_requirement = 0;
+coffee_requirement = 0;
+chocolate_requirement = 0;
+cream_requirement = 0;
+condensed_milk_requirement = 0;
+milk_requirement = 0;
+water_requirement = 0;
+sweetener_requirement = 0;
+
 enum ESceneState
 {
 	NonInitialized,
-	CustomerEntering
+	CustomerEntering,
+	CustomerLeaving
+}
+
+enum ECustomerType
+{
+	None,
+	StepByStep
 }
 
 objects_array = [
@@ -121,5 +216,6 @@ customer_spawn_pos_x = room_width + 200;
 customer_spawn_pos_y = 100;
 
 current_state = ESceneState.NonInitialized;
+customer_type = ECustomerType.None;
 
 #endregion

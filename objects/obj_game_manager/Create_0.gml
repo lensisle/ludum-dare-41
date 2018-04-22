@@ -2,7 +2,10 @@ enum EGameState
 {
 	Tutorial,
 	ResumeDay,
-	WorkDay
+	WorkDayHandled,
+	WorkDayNormal
 }
 
 current_state = EGameState.Tutorial;
+current_work_day = 1;
+current_score = 0;
